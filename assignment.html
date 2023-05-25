@@ -1,0 +1,119 @@
+<input type ='text' class="myArg" name="myArg" id="myArg" value="MyArg"  />
+<select id="myArgChange" class="myArgChange">
+  <option value="true">true</option>
+  <option value="false" selected>false</option>  
+</select>
+<div id="textboxDiv"></diV>
+</br>
+<button id="addArg"> + Add Arg</button>
+</br></br>
+<select id="SelectId">
+  <option value="selected">Select...</option>
+  <option value="constant">constant</option>
+  <option value="and">and</option>
+  <option value="or">or</option>
+  <option value="argument">argument</option>
+</select>
+
+<select id="showboolen">
+  <option value="true">true</option>
+  <option value="false">false</option>  
+</select>
+<select id="argValue" class="argValue"></select>
+
+<button id="cross">X</button>
+</br></br>
+<select id="hdnSelect">
+  <option value="selected">Select...</option>
+  <option value="constant">constant</option>
+  <option value="and">and</option>
+  <option value="or">or</option>
+  <option value="argument">argument</option>
+</select>
+<select id="DyargValue" class="DyargValue"></select>
+</br></br>
+<span>Result:<b id="result"></b></span>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      
+<script type="text/javascript">
+	$(document).ready(()=>{
+            $('#showboolen').hide();
+			$('#hdnSelect').hide();
+			
+			
+    }); 
+	var argarr =['myArg'];
+	$("#SelectId").change(function () {
+	var end = this.value;
+	if(end == "constant"){
+		$('#SelectId').hide();
+		$('#showboolen').show();
+	}else if(end == "argument"){
+		
+		$('#SelectId').hide();
+		$('#showboolen').hide();
+		$.each(argarr , function(index, val) { 
+		  
+		  $("#argValue").append('<option value="' + val + '">' + val + '</option>'); 
+		});	
+	}else if(end == "and" || end == "or"){
+		$('#hdnSelect').show();
+	}
+	});
+	$("#hdnSelect").change(function () {
+	var end = this.value;
+	if(end == "constant"){
+		$('#hdnSelect').hide();
+		$('#showboolen').show();
+	}else if(end == "argument"){
+		
+		$('#hdnSelect').hide();
+		$('#showboolen').hide();
+		$.each(argarr , function(index, val) { 
+		  
+		  $("#DyargValue").append('<option value="' + val + '">' + val + '</option>'); 
+		});	
+	}else if(end == "and" || end == "or"){
+		$('#hdnSelect').show();
+	}
+	});
+	$("#showboolen").change(function () {
+	var showboolvalue = this.value;
+	$("#result").text(showboolvalue);
+	});
+	$(".myArgChange").change(function () {
+	var myArgvalue = this.value;
+	$("#result").text(myArgvalue);
+	});
+	$("#cross").click(function () {
+	
+		$('#argValue').hide();
+		$('#showboolen').hide();
+		$('#SelectId').show();
+		$('#SelectId').val('selected');
+		var selectValue = $('#SelectId :selected').val();
+		if(selectValue == "selected"){
+			$("#result").text("undefined");
+		}
+   
+	});
+	
+	var counter = 2;
+	$("#addArg").click(function () {
+		$("#textboxDiv").append('<input type="text" class="myArg" name="myArg' + counter + '" id="myArg' + counter + '" value="" ><select id="myArgChange ' + counter + '" class="myArgChange"><option value="true">true</option><option value="false" selected>false</option></select>'); 
+		counter++;
+	});
+	$(document).ready(function() {
+    $(document).on('focusout','.myArg', function() {
+      var dynamicTextVal = $(this).val();
+	  argarr.push(dynamicTextVal);
+    });
+	$(document).on('change','.myArgChange', function() {
+	var myArgvalue = this.value;
+	$("#result").text(myArgvalue);
+	});
+	});
+	
+	
+</script>
